@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['validJson']], function () {
+    Route::group(['prefix' => 'csv-queue'], function (){
+        Route::post('/', [\App\Http\Controllers\Api\CsvMakerController::class, 'store']);
+    });
 });
